@@ -7,7 +7,7 @@ export default function User() {
   return (
     <div>
      <ul>
-       <li><Link to={'/user/detail/1'}>用户1</Link></li>
+       <li><Link to={'/user/detail/1'}>用户1111111111111</Link></li>
        <li><Link to={'/user/detail/2'}>用户2</Link></li>
        <li><Link to={'/user/detail/3'}>用户3</Link></li>
        <li><Link to={'/user/detail/4'}>用户4</Link></li>

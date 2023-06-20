@@ -1,99 +1,61 @@
-import React from "react";
+import React, { useState } from 'react';
 import {
-  LaptopOutlined,
-  NotificationOutlined,
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
   UserOutlined,
-} from "@ant-design/icons";
-import type { MenuProps } from "antd";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+  VideoCameraOutlined,
+  MailOutlined,
+} from '@ant-design/icons';
+import { Layout, Menu, Button, theme } from 'antd';
+import { Outlet } from 'react-router-dom';
+import {routers} from "./Index"
 
-const { Header, Content, Sider } = Layout;
+const { Header, Sider, Content } = Layout;
 
-const items1: MenuProps["items"] = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-
-
-const items2: MenuProps["items"] = [
-  UserOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-].map((icon, index) => {
-  const key = String(index + 1);
-
-  return {
-    key: `sub${key}`,
-    icon: React.createElement(icon),
-    label: `subnav ${key}`,
-
-    children: new Array(4).fill(null).map((_, j) => {
-      const subKey = index * 4 + j + 1;
-      return {
-        key: subKey,
-        label: `option${subKey}`,
-      };
-    }),
-  };
-});
-
-const App: React.FC = () => {
+const AppLayout: React.FC = () => {
+  const [collapsed, setCollapsed] = useState(false);
   const {
     token: { colorBgContainer },
   } = theme.useToken();
 
   return (
     <Layout>
-      <Header className="header">
-        <div className="logo" />
+      <Sider trigger={null} collapsible collapsed={collapsed} style={{height:'100vh'}}>
+        <div className="demo-logo-vertical" />
+        <h1 style={{color:"#fff"}}>serveAdmin-web</h1>
         <Menu
           theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items1}
+          mode="inline"
+          defaultSelectedKeys={['1']}
+          items={routers}
         />
-      </Header>
+      </Sider>
       <Layout>
-        <Sider width={200} style={{ background: colorBgContainer }}>
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
-            style={{ height: "100%", borderRight: 0 }}
-            items={items2}
-          />
-        </Sider>
-        <Layout style={{ padding: "0 24px 24px" }}>
-          <Breadcrumb
-            items={[
-              {
-                title: "Home",
-              },
-              {
-                title: <a href="">Application Center</a>,
-              },
-              {
-                title: <a href="">Application List</a>,
-              },
-              {
-                title: "An Application",
-              },
-            ]}
-          />
-          <Content
+        <Header style={{ padding: 0, background: colorBgContainer }}>
+          <Button
+            type="text"
+            icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
+            onClick={() => setCollapsed(!collapsed)}
             style={{
-              padding: 24,
-              margin: 0,
-              minHeight: 280,
-              background: colorBgContainer,
+              fontSize: '16px',
+              width: 64,
+              height: 64,
             }}
-          >
-            Content
-          </Content>
-        </Layout>
+          />
+        </Header>
+        <Content
+          style={{
+            margin: '24px 16px',
+            padding: 24,
+            background: colorBgContainer,
+          }}    
+        >
+         <Outlet/>
+        </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default App;
+export default AppLayout;

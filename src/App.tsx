@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { useRoutes } from 'react-router-dom';
-import { routers } from './routers/index'
-
+import { routers } from './routers/Index'
+import "./App.scss";
 const App: React.FC = () => {
 
 //   <div className="App">
